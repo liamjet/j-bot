@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 
+from random import randrange
+
 f = open('token.txt','r')
 token = f.read()
 
@@ -21,7 +23,16 @@ async def create(ctx,*args):
     message = await ctx.send('{} options: {}'.format(len(args), ', '.join(poll_options)))
     for x in range(len(args)):
         await message.add_reaction(emojis[x])
+
+@bot.command(brief='Rolls a dice of your choosing.', description='To roll a dice, type the following format: "jbot roll #" where # is any number.')
+async def roll(ctx,*args):
+    results = []
+    for x in args:
+        x = int(x)
+        results.append(randrange(x)+1)
         
+        
+    message = await ctx.send('You rolled: {}'.format(results))
 bot.run(token)
 
 
